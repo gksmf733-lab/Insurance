@@ -242,9 +242,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzJzSzP1V4uGBDU7rzlBfagGNIZHslLPVrZX-cVQrsQez4d8peUZpmQzsbKTjIqN3AdCg/exec';
     var submitBtn = document.querySelector('[type="submit"]');
 
+    var loadingOverlay = document.getElementById('loading-overlay');
+
     if (GOOGLE_SHEET_URL) {
       submitBtn.disabled = true;
       submitBtn.textContent = '전송 중...';
+      loadingOverlay.classList.add('active');
 
       fetch(GOOGLE_SHEET_URL, {
         method: 'POST',
@@ -261,8 +264,10 @@ document.addEventListener('DOMContentLoaded', function () {
           insuranceType: insuranceText
         })
       }).then(function () {
+        loadingOverlay.classList.remove('active');
         successModal.classList.add('active');
       }).catch(function () {
+        loadingOverlay.classList.remove('active');
         successModal.classList.add('active');
       }).finally(function () {
         submitBtn.disabled = false;
