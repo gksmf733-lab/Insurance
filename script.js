@@ -1,196 +1,232 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('consultation-form');
-  const birthYearSelect = document.getElementById('birth-year');
-  const togglePrivacy = document.getElementById('toggle-privacy');
-  const privacyDetail = document.getElementById('privacy-detail');
-  const successModal = document.getElementById('success-modal');
-  const modalClose = document.getElementById('modal-close');
-  const diseaseNone = document.getElementById('disease-none');
+  var totalSteps = 7;
+  var currentStep = 1;
+  var formData = {};
 
-  // 출생연도 옵션 생성 (1940 ~ 2010)
-  for (let year = 2010; year >= 1940; year--) {
-    const option = document.createElement('option');
-    option.value = year;
-    option.textContent = year + '년';
-    birthYearSelect.appendChild(option);
+  var progressFill = document.getElementById('progress-fill');
+  var stepIndicator = document.getElementById('step-indicator');
+  var backBtn = document.getElementById('back-btn');
+  var birthYearSelect = document.getElementById('birth-year');
+  var togglePrivacy = document.getElementById('toggle-privacy');
+  var privacyDetail = document.getElementById('privacy-detail');
+  var successModal = document.getElementById('success-modal');
+  var modalClose = document.getElementById('modal-close');
+
+  // ===== 출생연도 옵션 생성 =====
+  for (var y = 2010; y >= 1940; y--) {
+    var opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y + '년';
+    birthYearSelect.appendChild(opt);
   }
 
-  // "없음" 체크박스 로직: "없음" 선택 시 다른 질병 해제, 질병 선택 시 "없음" 해제
-  const diseaseCheckboxes = document.querySelectorAll('input[name="disease"]');
-  diseaseCheckboxes.forEach(function (cb) {
-    cb.addEventListener('change', function () {
-      if (this.value === '없음' && this.checked) {
-        diseaseCheckboxes.forEach(function (other) {
-          if (other.value !== '없음') other.checked = false;
-        });
-      } else if (this.value !== '없음' && this.checked) {
-        diseaseNone.checked = false;
-      }
+  // ===== 스텝 이동 =====
+  function goToStep(step) {
+    if (step < 1 || step > totalSteps) return;
+    var steps = document.querySelectorAll('.step');
+    steps.forEach(function (s) { s.classList.remove('active'); });
+    var target = document.querySelector('.step[data-step="' + step + '"]');
+    if (target) target.classList.add('active');
+    currentStep = step;
+    progressFill.style.width = (step / totalSteps * 100) + '%';
+    stepIndicator.textContent = step + ' / ' + totalSteps + ' 단계';
+    backBtn.style.display = step > 1 ? 'inline-flex' : 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ===== 이전 버튼 =====
+  backBtn.addEventListener('click', function () {
+    goToStep(currentStep - 1);
+  });
+
+  // ===== 단일 선택 버튼 (성별, 지역) =====
+  document.querySelectorAll('.choice-btn:not(.multi)').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var name = this.getAttribute('data-name');
+      var value = this.getAttribute('data-value');
+      // 같은 그룹에서 선택 해제
+      this.closest('.choice-grid').querySelectorAll('.choice-btn').forEach(function (b) {
+        b.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      formData[name] = value;
+      // 자동 다음 단계
+      var nextStep = currentStep + 1;
+      setTimeout(function () { goToStep(nextStep); }, 250);
     });
   });
 
-  // 개인정보 동의 토글
-  togglePrivacy.addEventListener('click', function () {
-    privacyDetail.classList.toggle('open');
-    this.textContent = privacyDetail.classList.contains('open') ? '내용 닫기' : '내용 보기';
+  // ===== 복수 선택 버튼 (질병, 보험종류) =====
+  document.querySelectorAll('.choice-btn.multi').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var name = this.getAttribute('data-name');
+      var value = this.getAttribute('data-value');
+      var grid = this.closest('.choice-grid');
+
+      // "없음" 로직
+      if (name === 'disease') {
+        if (value === '없음') {
+          grid.querySelectorAll('.choice-btn').forEach(function (b) {
+            b.classList.remove('selected');
+          });
+          this.classList.add('selected');
+        } else {
+          grid.querySelector('[data-value="없음"]').classList.remove('selected');
+          this.classList.toggle('selected');
+        }
+      } else {
+        this.classList.toggle('selected');
+      }
+
+      // 데이터 수집
+      var selected = [];
+      grid.querySelectorAll('.choice-btn.selected').forEach(function (b) {
+        selected.push(b.getAttribute('data-value'));
+      });
+      formData[name] = selected;
+
+      // 다음 버튼 활성화
+      var nextBtnId = name === 'disease' ? 'disease-next' : 'insurance-next';
+      var nextBtn = document.getElementById(nextBtnId);
+      if (nextBtn) nextBtn.disabled = selected.length === 0;
+    });
   });
 
-  // 전화번호 자동 포맷
+  // ===== 출생연도 선택 =====
+  birthYearSelect.addEventListener('change', function () {
+    formData.birthYear = this.value;
+    var nextBtn = document.getElementById('birth-year-next');
+    nextBtn.disabled = !this.value;
+  });
+
+  // ===== 다음 버튼 클릭 =====
+  document.querySelectorAll('.next-btn[data-next]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (this.disabled) return;
+      var next = parseInt(this.getAttribute('data-next'));
+      goToStep(next);
+    });
+  });
+
+  // ===== 전화번호 자동 포맷 =====
   var phoneInput = document.getElementById('phone');
   phoneInput.addEventListener('input', function () {
-    var value = this.value.replace(/[^0-9]/g, '');
-    if (value.length <= 3) {
-      this.value = value;
-    } else if (value.length <= 7) {
-      this.value = value.slice(0, 3) + '-' + value.slice(3);
+    var v = this.value.replace(/[^0-9]/g, '');
+    if (v.length <= 3) {
+      this.value = v;
+    } else if (v.length <= 7) {
+      this.value = v.slice(0, 3) + '-' + v.slice(3);
     } else {
-      this.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+      this.value = v.slice(0, 3) + '-' + v.slice(3, 7) + '-' + v.slice(7, 11);
     }
   });
 
-  // 폼 유효성 검사
-  function validateForm() {
-    var isValid = true;
+  // ===== 개인정보 동의 토글 =====
+  togglePrivacy.addEventListener('click', function () {
+    privacyDetail.classList.toggle('open');
+    this.textContent = privacyDetail.classList.contains('open') ? '닫기' : '보기';
+  });
 
-    // 이름
-    var name = document.getElementById('name');
+  // ===== 최종 폼 제출 =====
+  var finalForm = document.getElementById('final-form');
+  finalForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var valid = true;
+
+    var nameInput = document.getElementById('name');
     var nameError = document.getElementById('name-error');
-    if (!name.value.trim()) {
+    if (!nameInput.value.trim()) {
       nameError.textContent = '이름을 입력해주세요.';
-      name.classList.add('invalid');
-      isValid = false;
+      nameInput.classList.add('invalid');
+      valid = false;
     } else {
       nameError.textContent = '';
-      name.classList.remove('invalid');
+      nameInput.classList.remove('invalid');
     }
 
-    // 연락처
-    var phone = document.getElementById('phone');
+    var phoneVal = phoneInput.value.replace(/[^0-9]/g, '');
     var phoneError = document.getElementById('phone-error');
-    var phoneValue = phone.value.replace(/[^0-9]/g, '');
-    if (!phoneValue || phoneValue.length < 10) {
+    if (!phoneVal || phoneVal.length < 10) {
       phoneError.textContent = '올바른 연락처를 입력해주세요.';
-      phone.classList.add('invalid');
-      isValid = false;
+      phoneInput.classList.add('invalid');
+      valid = false;
     } else {
       phoneError.textContent = '';
-      phone.classList.remove('invalid');
+      phoneInput.classList.remove('invalid');
     }
 
-    // 성별
-    var genderError = document.getElementById('gender-error');
-    var genderSelected = document.querySelector('input[name="gender"]:checked');
-    if (!genderSelected) {
-      genderError.textContent = '성별을 선택해주세요.';
-      isValid = false;
-    } else {
-      genderError.textContent = '';
-    }
-
-    // 출생연도
-    var birthYear = document.getElementById('birth-year');
-    var birthYearError = document.getElementById('birth-year-error');
-    if (!birthYear.value) {
-      birthYearError.textContent = '출생연도를 선택해주세요.';
-      birthYear.classList.add('invalid');
-      isValid = false;
-    } else {
-      birthYearError.textContent = '';
-      birthYear.classList.remove('invalid');
-    }
-
-    // 지역
-    var region = document.getElementById('region');
-    var regionError = document.getElementById('region-error');
-    if (!region.value) {
-      regionError.textContent = '거주 지역을 선택해주세요.';
-      region.classList.add('invalid');
-      isValid = false;
-    } else {
-      regionError.textContent = '';
-      region.classList.remove('invalid');
-    }
-
-    // 기존 질병
-    var diseaseError = document.getElementById('disease-error');
-    var diseaseChecked = document.querySelectorAll('input[name="disease"]:checked');
-    if (diseaseChecked.length === 0) {
-      diseaseError.textContent = '기존 질병을 선택해주세요. (없으면 "없음" 선택)';
-      isValid = false;
-    } else {
-      diseaseError.textContent = '';
-    }
-
-    // 보험 종류
-    var insuranceError = document.getElementById('insurance-type-error');
-    var insuranceChecked = document.querySelectorAll('input[name="insuranceType"]:checked');
-    if (insuranceChecked.length === 0) {
-      insuranceError.textContent = '관심있는 보험 종류를 1개 이상 선택해주세요.';
-      isValid = false;
-    } else {
-      insuranceError.textContent = '';
-    }
-
-    // 개인정보 동의
     var consent = document.getElementById('privacy-consent');
     var consentError = document.getElementById('consent-error');
     if (!consent.checked) {
       consentError.textContent = '개인정보 수집에 동의해주세요.';
-      isValid = false;
+      valid = false;
     } else {
       consentError.textContent = '';
     }
 
-    return isValid;
-  }
+    if (!valid) return;
 
-  // 폼 제출
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+    formData.name = nameInput.value.trim();
+    formData.phone = phoneInput.value;
+    formData.submittedAt = new Date().toISOString();
 
-    if (!validateForm()) {
-      // 첫 번째 에러 항목으로 스크롤
-      var firstError = form.querySelector('.invalid, .error-msg:not(:empty)');
-      if (firstError) {
-        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-      return;
-    }
-
-    // 폼 데이터 수집
-    var formData = {
-      name: document.getElementById('name').value.trim(),
-      phone: document.getElementById('phone').value,
-      gender: document.querySelector('input[name="gender"]:checked').value,
-      birthYear: document.getElementById('birth-year').value,
-      region: document.getElementById('region').value,
-      diseases: Array.from(document.querySelectorAll('input[name="disease"]:checked')).map(function (cb) {
-        return cb.value;
-      }),
-      insuranceTypes: Array.from(document.querySelectorAll('input[name="insuranceType"]:checked')).map(function (cb) {
-        return cb.value;
-      }),
-      submittedAt: new Date().toISOString()
-    };
-
-    // 콘솔에 데이터 출력 (실제 서비스에서는 서버로 전송)
     console.log('상담 신청 데이터:', JSON.stringify(formData, null, 2));
 
-    // 성공 모달 표시
     successModal.classList.add('active');
-
-    // 폼 초기화
-    form.reset();
+    finalForm.reset();
+    goToStep(1);
+    formData = {};
   });
 
-  // 모달 닫기
+  // ===== 모달 닫기 =====
   modalClose.addEventListener('click', function () {
     successModal.classList.remove('active');
   });
-
   successModal.addEventListener('click', function (e) {
-    if (e.target === successModal) {
-      successModal.classList.remove('active');
-    }
+    if (e.target === successModal) successModal.classList.remove('active');
   });
+
+  // ===== 실시간 신청현황 =====
+  var surnames = ['김', '이', '박', '최', '정', '강', '조', '윤', '장', '임', '한', '오', '서', '신', '권', '황', '안', '송', '류', '홍'];
+  var tbody = document.getElementById('status-tbody');
+  var maxRows = 8;
+
+  function randomPhone() {
+    var last2 = String(Math.floor(Math.random() * 100)).padStart(2, '0');
+    return '010-****-**' + last2;
+  }
+
+  function randomName() {
+    var s = surnames[Math.floor(Math.random() * surnames.length)];
+    return s + '**';
+  }
+
+  function addRow() {
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>' + randomName() + '</td>' +
+      '<td>' + randomPhone() + '</td>' +
+      '<td><span class="status-badge">접수완료</span></td>';
+    tbody.insertBefore(tr, tbody.firstChild);
+
+    // 최대 행 수 유지
+    while (tbody.children.length > maxRows) {
+      tbody.removeChild(tbody.lastChild);
+    }
+  }
+
+  // 초기 5개 행 즉시 표시
+  for (var i = 0; i < 5; i++) {
+    addRow();
+  }
+
+  // 랜덤 간격으로 새 행 추가 (5~15초)
+  function scheduleNextRow() {
+    var delay = 5000 + Math.floor(Math.random() * 10000);
+    setTimeout(function () {
+      addRow();
+      scheduleNextRow();
+    }, delay);
+  }
+  scheduleNextRow();
 });

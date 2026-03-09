@@ -3,197 +3,276 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>보험 무료상담 신청</title>
+  <title>통합보험 비교견적</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- 히어로 섹션 -->
-  <section class="hero">
-    <div class="container">
-      <h1>나에게 딱 맞는 보험,<br><span class="highlight">무료로 상담</span>받아보세요</h1>
-      <p class="subtitle">전문 설계사가 고객님의 상황에 맞는 최적의 보험을 추천해드립니다.</p>
-      <a href="#form-section" class="cta-btn">무료 상담 신청하기</a>
-    </div>
-  </section>
-
-  <!-- 혜택 섹션 -->
-  <section class="benefits">
-    <div class="container">
-      <h2>왜 보험상담을 받아야 할까요?</h2>
-      <div class="benefit-grid">
-        <div class="benefit-card">
-          <div class="benefit-icon">&#128176;</div>
-          <h3>보험료 절약</h3>
-          <p>현재 가입된 보험을 분석하여 불필요한 보장을 정리하고 보험료를 절약할 수 있습니다.</p>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon">&#128203;</div>
-          <h3>맞춤 보장 설계</h3>
-          <p>나이, 직업, 건강상태를 고려하여 꼭 필요한 보장만 골라 설계해드립니다.</p>
-        </div>
-        <div class="benefit-card">
-          <div class="benefit-icon">&#128101;</div>
-          <h3>전문가 1:1 상담</h3>
-          <p>경력 10년 이상의 전문 설계사가 친절하고 정확하게 상담해드립니다.</p>
-        </div>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <svg class="logo-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#3B82F6" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>통합보험 비교견적</span>
+      </div>
+      <div class="header-phone">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span>1670-9275</span>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- 상담 신청 폼 섹션 -->
-  <section id="form-section" class="form-section">
-    <div class="container">
-      <h2>무료 상담 신청</h2>
-      <p class="form-desc">아래 정보를 입력해주시면 전문 설계사가 연락드립니다.</p>
+  <!-- 메인 컨텐츠 -->
+  <main class="main">
 
-      <form id="consultation-form" class="consultation-form" novalidate>
-        <!-- 이름 -->
-        <div class="form-group">
-          <label for="name">이름 <span class="required">*</span></label>
-          <input type="text" id="name" name="name" placeholder="홍길동" required>
-          <span class="error-msg" id="name-error"></span>
+    <!-- ===== 단계별 폼 영역 ===== -->
+    <section class="step-section">
+      <!-- 프로그레스 바 -->
+      <div class="progress-bar-wrap">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
+        <p class="step-indicator" id="step-indicator">1 / 7 단계</p>
+      </div>
 
-        <!-- 연락처 -->
-        <div class="form-group">
-          <label for="phone">연락처 <span class="required">*</span></label>
-          <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" required>
-          <span class="error-msg" id="phone-error"></span>
-        </div>
+      <!-- 스텝 컨테이너 -->
+      <div class="step-container" id="step-container">
 
-        <!-- 성별 -->
-        <div class="form-group">
-          <label>성별 <span class="required">*</span></label>
-          <div class="radio-group">
-            <label class="radio-label">
-              <input type="radio" name="gender" value="남성" required> 남성
-            </label>
-            <label class="radio-label">
-              <input type="radio" name="gender" value="여성"> 여성
-            </label>
+        <!-- Step 1: 인트로 -->
+        <div class="step active" data-step="1">
+          <div class="step-card intro-card">
+            <div class="intro-icon">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#3B82F6" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h2>통합보험 비교견적</h2>
+            <p class="intro-sub">개인에 맞는 최대 20개 보험사</p>
+            <p class="intro-highlight">맞춤 보험료를 무료로 모두 비교해드립니다</p>
+            <div class="intro-badges">
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 무료상담</span>
+              <span class="badge-divider">|</span>
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 간편비교</span>
+              <span class="badge-divider">|</span>
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 개인맞춤형분석</span>
+            </div>
+            <button class="next-btn full-btn" data-next="2">통합보험 비교견적 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
+            <p class="privacy-notice"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> 개인정보 안전하게 보호됩니다</p>
           </div>
-          <span class="error-msg" id="gender-error"></span>
         </div>
 
-        <!-- 출생연도 -->
-        <div class="form-group">
-          <label for="birth-year">출생연도 <span class="required">*</span></label>
-          <select id="birth-year" name="birthYear" required>
-            <option value="">출생연도 선택</option>
-          </select>
-          <span class="error-msg" id="birth-year-error"></span>
-        </div>
-
-        <!-- 지역 -->
-        <div class="form-group">
-          <label for="region">거주 지역 <span class="required">*</span></label>
-          <select id="region" name="region" required>
-            <option value="">지역 선택</option>
-            <option value="서울">서울</option>
-            <option value="경기">경기</option>
-            <option value="인천">인천</option>
-            <option value="부산">부산</option>
-            <option value="대구">대구</option>
-            <option value="광주">광주</option>
-            <option value="대전">대전</option>
-            <option value="울산">울산</option>
-            <option value="세종">세종</option>
-            <option value="강원">강원</option>
-            <option value="충북">충북</option>
-            <option value="충남">충남</option>
-            <option value="전북">전북</option>
-            <option value="전남">전남</option>
-            <option value="경북">경북</option>
-            <option value="경남">경남</option>
-            <option value="제주">제주</option>
-          </select>
-          <span class="error-msg" id="region-error"></span>
-        </div>
-
-        <!-- 기존 질병 -->
-        <div class="form-group">
-          <label>기존 질병 <span class="required">*</span></label>
-          <div class="checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" name="disease" value="없음" id="disease-none"> 없음
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="disease" value="당뇨"> 당뇨
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="disease" value="고혈압"> 고혈압
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="disease" value="통풍"> 통풍
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="disease" value="기타"> 기타
-            </label>
+        <!-- Step 2: 성별 -->
+        <div class="step" data-step="2">
+          <div class="step-card">
+            <h2>성별을 선택해주세요</h2>
+            <div class="choice-grid two-col">
+              <button class="choice-btn" data-name="gender" data-value="남성">
+                <span class="choice-emoji">&#128104;</span>
+                <span>남성</span>
+              </button>
+              <button class="choice-btn" data-name="gender" data-value="여성">
+                <span class="choice-emoji">&#128105;</span>
+                <span>여성</span>
+              </button>
+            </div>
           </div>
-          <span class="error-msg" id="disease-error"></span>
         </div>
 
-        <!-- 원하는 보험 종류 -->
-        <div class="form-group">
-          <label>원하는 보험 종류 <span class="required">*</span></label>
-          <div class="checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="실손보험"> 실손보험
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="암보험"> 암보험
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="종신보험"> 종신보험
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="연금보험"> 연금보험
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="자동차보험"> 자동차보험
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="운전자보험"> 운전자보험
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="어린이보험"> 어린이보험
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="insuranceType" value="치아보험"> 치아보험
-            </label>
+        <!-- Step 3: 출생연도 -->
+        <div class="step" data-step="3">
+          <div class="step-card">
+            <h2>출생연도를 선택해주세요</h2>
+            <select class="step-select" id="birth-year" name="birthYear">
+              <option value="">출생연도 선택</option>
+            </select>
+            <button class="next-btn" id="birth-year-next" data-next="4" disabled>다음</button>
           </div>
-          <span class="error-msg" id="insurance-type-error"></span>
         </div>
 
-        <!-- 개인정보 수집 동의 -->
-        <div class="form-group consent-group">
-          <label class="checkbox-label consent-label">
-            <input type="checkbox" id="privacy-consent" name="privacyConsent" required>
-            <span>[필수] 개인정보 수집 및 이용에 동의합니다.</span>
-          </label>
-          <button type="button" class="toggle-privacy" id="toggle-privacy">내용 보기</button>
-          <div class="privacy-detail" id="privacy-detail">
-            <p><strong>개인정보 수집 및 이용 안내</strong></p>
-            <p><strong>수집 항목:</strong> 이름, 연락처, 성별, 출생연도, 거주 지역, 기존 질병, 관심 보험 종류</p>
-            <p><strong>수집 목적:</strong> 보험 상담 서비스 제공 및 맞춤 상품 안내</p>
-            <p><strong>보유 기간:</strong> 수집일로부터 1년 (동의 철회 시 즉시 파기)</p>
-            <p>개인정보 수집에 동의하지 않을 권리가 있으며, 동의 거부 시 상담 서비스 이용이 제한됩니다.</p>
+        <!-- Step 4: 지역 -->
+        <div class="step" data-step="4">
+          <div class="step-card">
+            <h2>거주 지역을 선택해주세요</h2>
+            <div class="choice-grid three-col">
+              <button class="choice-btn" data-name="region" data-value="서울">서울</button>
+              <button class="choice-btn" data-name="region" data-value="경기">경기</button>
+              <button class="choice-btn" data-name="region" data-value="인천">인천</button>
+              <button class="choice-btn" data-name="region" data-value="부산">부산</button>
+              <button class="choice-btn" data-name="region" data-value="대구">대구</button>
+              <button class="choice-btn" data-name="region" data-value="광주">광주</button>
+              <button class="choice-btn" data-name="region" data-value="대전">대전</button>
+              <button class="choice-btn" data-name="region" data-value="울산">울산</button>
+              <button class="choice-btn" data-name="region" data-value="세종">세종</button>
+              <button class="choice-btn" data-name="region" data-value="강원">강원</button>
+              <button class="choice-btn" data-name="region" data-value="충북">충북</button>
+              <button class="choice-btn" data-name="region" data-value="충남">충남</button>
+              <button class="choice-btn" data-name="region" data-value="전북">전북</button>
+              <button class="choice-btn" data-name="region" data-value="전남">전남</button>
+              <button class="choice-btn" data-name="region" data-value="경북">경북</button>
+              <button class="choice-btn" data-name="region" data-value="경남">경남</button>
+              <button class="choice-btn" data-name="region" data-value="제주">제주</button>
+            </div>
           </div>
-          <span class="error-msg" id="consent-error"></span>
         </div>
 
-        <button type="submit" class="submit-btn">무료 상담 신청하기</button>
-      </form>
-    </div>
-  </section>
+        <!-- Step 5: 기존 질병 -->
+        <div class="step" data-step="5">
+          <div class="step-card">
+            <h2>기존 질병이 있으신가요?</h2>
+            <p class="step-sub">해당하는 항목을 모두 선택해주세요</p>
+            <div class="choice-grid three-col">
+              <button class="choice-btn multi" data-name="disease" data-value="없음">없음</button>
+              <button class="choice-btn multi" data-name="disease" data-value="당뇨">당뇨</button>
+              <button class="choice-btn multi" data-name="disease" data-value="고혈압">고혈압</button>
+              <button class="choice-btn multi" data-name="disease" data-value="통풍">통풍</button>
+              <button class="choice-btn multi" data-name="disease" data-value="기타">기타</button>
+            </div>
+            <button class="next-btn" id="disease-next" data-next="6" disabled>다음</button>
+          </div>
+        </div>
+
+        <!-- Step 6: 보험 종류 -->
+        <div class="step" data-step="6">
+          <div class="step-card">
+            <h2>관심있는 보험을 선택해주세요</h2>
+            <p class="step-sub">복수 선택 가능합니다</p>
+            <div class="choice-grid three-col">
+              <button class="choice-btn multi" data-name="insuranceType" data-value="실손보험">실손보험</button>
+              <button class="choice-btn multi" data-name="insuranceType" data-value="암보험">암보험</button>
+              <button class="choice-btn multi" data-name="insuranceType" data-value="종신보험">종신보험</button>
+              <button class="choice-btn multi" data-name="insuranceType" data-value="연금보험">연금보험</button>
+              <button class="choice-btn multi" data-name="insuranceType" data-value="자동차보험">자동차보험</button>
+              <button class="choice-btn multi" data-name="insuranceType" data-value="운전자보험">운전자보험</button>
+              <button class="choice-btn multi" data-name="insuranceType" data-value="어린이보험">어린이보험</button>
+              <button class="choice-btn multi" data-name="insuranceType" data-value="치아보험">치아보험</button>
+            </div>
+            <button class="next-btn" id="insurance-next" data-next="7" disabled>다음</button>
+          </div>
+        </div>
+
+        <!-- Step 7: 연락처 입력 (최종) -->
+        <div class="step" data-step="7">
+          <div class="step-card">
+            <h2>상담받으실 연락처를 입력해주세요</h2>
+            <p class="step-sub">전문 설계사가 빠르게 연락드립니다</p>
+            <form id="final-form" novalidate>
+              <div class="input-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" placeholder="홍길동" required>
+                <span class="error-msg" id="name-error"></span>
+              </div>
+              <div class="input-group">
+                <label for="phone">연락처</label>
+                <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" required>
+                <span class="error-msg" id="phone-error"></span>
+              </div>
+              <div class="consent-row">
+                <label class="consent-check">
+                  <input type="checkbox" id="privacy-consent" required>
+                  <span>[필수] 개인정보 수집 및 이용 동의</span>
+                </label>
+                <button type="button" class="consent-toggle" id="toggle-privacy">보기</button>
+              </div>
+              <div class="privacy-detail" id="privacy-detail">
+                <p><strong>개인정보 수집 및 이용 안내</strong></p>
+                <p><strong>수집 항목:</strong> 이름, 연락처, 성별, 출생연도, 거주 지역, 기존 질병, 관심 보험 종류</p>
+                <p><strong>수집 목적:</strong> 보험 상담 서비스 제공 및 맞춤 상품 안내</p>
+                <p><strong>보유 기간:</strong> 수집일로부터 1년 (동의 철회 시 즉시 파기)</p>
+              </div>
+              <span class="error-msg" id="consent-error"></span>
+              <button type="submit" class="next-btn full-btn submit-final">무료 상담 신청 완료 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 이전 버튼 -->
+      <button class="back-btn" id="back-btn" style="display:none;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> 이전
+      </button>
+    </section>
+
+    <!-- ===== 통합보험 비교, 제대로 하는 방법 ===== -->
+    <section class="knowhow-section">
+      <div class="container">
+        <h2 class="section-title">통합보험 비교, 제대로 하는 방법</h2>
+        <p class="section-sub">현명한 보험 가입을 위한 핵심 노하우</p>
+        <div class="knowhow-grid">
+          <!-- Card 1 -->
+          <div class="knowhow-card">
+            <div class="knowhow-icon icon-blue">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <span class="knowhow-badge badge-blue">KNOW HOW 01</span>
+            <h3>여러 보험사 동시 비교하기</h3>
+            <p>한 번에 20개 이상의 보험사 상품을 비교하여 가장 합리적인 보험료와 보장 내용을 찾을 수 있습니다.</p>
+            <ul class="knowhow-list">
+              <li>보험료 비교로 최대 40% 절감 가능</li>
+              <li>보장 내용을 한눈에 파악</li>
+              <li>중복 보장 확인으로 불필요한 지출 방지</li>
+            </ul>
+          </div>
+          <!-- Card 2 -->
+          <div class="knowhow-card">
+            <div class="knowhow-icon icon-green">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5"><path d="M21.5 2v6h-6M2.5 22v-6h6"/><path d="M2.5 15.5A9.96 9.96 0 0112 5a9.96 9.96 0 019.5 5.5M21.5 8.5A9.96 9.96 0 0112 19a9.96 9.96 0 01-9.5-5.5"/></svg>
+            </div>
+            <span class="knowhow-badge badge-green">KNOW HOW 02</span>
+            <h3>주기적인 보험 리모델링</h3>
+            <p>생애주기와 건강 상태 변화에 맞춰 정기적으로 보험을 점검하고 조정하세요.</p>
+            <ul class="knowhow-list">
+              <li>결혼, 출산 등 라이프 이벤트 발생 시</li>
+              <li>직업이나 소득 변화가 있을 때</li>
+              <li>매년 갱신 시기에 재비교 필수</li>
+            </ul>
+          </div>
+          <!-- Card 3 -->
+          <div class="knowhow-card">
+            <div class="knowhow-icon icon-purple">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <span class="knowhow-badge badge-purple">KNOW HOW 03</span>
+            <h3>전문가 무료 상담 활용</h3>
+            <p>복잡한 보험 용어와 약관, 전문 설계사의 도움을 받아 완벽하게 이해하세요.</p>
+            <ul class="knowhow-list">
+              <li>맞춤형 보장 설계 가능</li>
+              <li>숨은 혜택과 특약 추천</li>
+              <li>보험금 청구 시 전문적인 지원</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 신청현황 ===== -->
+    <section class="status-section">
+      <div class="container">
+        <div class="status-header">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <h2>신청현황</h2>
+        </div>
+        <table class="status-table">
+          <thead>
+            <tr>
+              <th>이름</th>
+              <th>전화번호</th>
+              <th>접수완료</th>
+            </tr>
+          </thead>
+          <tbody id="status-tbody">
+            <!-- JS로 동적 생성 -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
 
   <!-- 성공 모달 -->
   <div class="modal-overlay" id="success-modal">
     <div class="modal">
       <div class="modal-icon">&#10004;</div>
       <h3>상담 신청이 완료되었습니다!</h3>
-      <p>입력하신 연락처로 영업일 기준 1일 이내에 전문 설계사가 연락드리겠습니다.</p>
+      <p>입력하신 연락처로 영업일 기준 1일 이내에<br>전문 설계사가 연락드리겠습니다.</p>
       <button class="modal-close-btn" id="modal-close">확인</button>
     </div>
   </div>
@@ -201,7 +280,7 @@
   <!-- 푸터 -->
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2026 보험상담센터. All rights reserved.</p>
+      <p>&copy; 2026 통합보험 비교견적. All rights reserved.</p>
       <p class="footer-notice">본 페이지는 보험 상담 연결 서비스이며, 보험 계약 체결을 강요하지 않습니다.</p>
     </div>
   </footer>
