@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentStep = 1;
   var formData = {};
 
-  var progressFill = document.getElementById('progress-fill');
-  var stepIndicator = document.getElementById('step-indicator');
+  var dots = document.querySelectorAll('#progress-dots .dot');
+  var stepLabel = document.getElementById('step-label');
   var backBtn = document.getElementById('back-btn');
   var birthYearSelect = document.getElementById('birth-year');
   var togglePrivacy = document.getElementById('toggle-privacy');
@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var successModal = document.getElementById('success-modal');
   var modalClose = document.getElementById('modal-close');
 
-  // ===== 출생연도 옵션 생성 =====
+  var stepLabels = ['시작하기', '성별 선택', '출생연도', '거주 지역', '질병 여부', '보험 선택', '연락처 입력'];
+
+  // ===== 출생연도 =====
   for (var y = 2010; y >= 1940; y--) {
     var opt = document.createElement('option');
     opt.value = y;
@@ -23,15 +25,21 @@ document.addEventListener('DOMContentLoaded', function () {
   // ===== 스텝 이동 =====
   function goToStep(step) {
     if (step < 1 || step > totalSteps) return;
-    var steps = document.querySelectorAll('.step');
-    steps.forEach(function (s) { s.classList.remove('active'); });
+    document.querySelectorAll('.step').forEach(function (s) { s.classList.remove('active'); });
     var target = document.querySelector('.step[data-step="' + step + '"]');
     if (target) target.classList.add('active');
     currentStep = step;
-    progressFill.style.width = (step / totalSteps * 100) + '%';
-    stepIndicator.textContent = step + ' / ' + totalSteps + ' 단계';
-    backBtn.style.display = step > 1 ? 'inline-flex' : 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // 프로그레스 도트 업데이트
+    dots.forEach(function (d, i) {
+      d.classList.remove('active', 'done');
+      if (i < step - 1) d.classList.add('done');
+      if (i === step - 1) d.classList.add('active');
+    });
+
+    stepLabel.textContent = stepLabels[step - 1] || '';
+    backBtn.style.display = step > 1 ? 'block' : 'none';
+    document.querySelector('.form-float').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // ===== 이전 버튼 =====
@@ -39,70 +47,64 @@ document.addEventListener('DOMContentLoaded', function () {
     goToStep(currentStep - 1);
   });
 
-  // ===== 단일 선택 버튼 (성별, 지역) =====
-  document.querySelectorAll('.choice-btn:not(.multi)').forEach(function (btn) {
+  // ===== 단일 선택 (pick-card & pick-chip 단일) =====
+  document.querySelectorAll('.pick-card:not(.multi), .pick-chip:not(.multi)').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var name = this.getAttribute('data-name');
       var value = this.getAttribute('data-value');
-      // 같은 그룹에서 선택 해제
-      this.closest('.choice-grid').querySelectorAll('.choice-btn').forEach(function (b) {
+      var parent = this.closest('.pick-row');
+      parent.querySelectorAll('.pick-card, .pick-chip').forEach(function (b) {
         b.classList.remove('selected');
       });
       this.classList.add('selected');
       formData[name] = value;
-      // 자동 다음 단계
-      var nextStep = currentStep + 1;
-      setTimeout(function () { goToStep(nextStep); }, 250);
+      var next = currentStep + 1;
+      setTimeout(function () { goToStep(next); }, 200);
     });
   });
 
-  // ===== 복수 선택 버튼 (질병, 보험종류) =====
-  document.querySelectorAll('.choice-btn.multi').forEach(function (btn) {
+  // ===== 복수 선택 (multi) =====
+  document.querySelectorAll('.pick-chip.multi').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var name = this.getAttribute('data-name');
       var value = this.getAttribute('data-value');
-      var grid = this.closest('.choice-grid');
+      var parent = this.closest('.pick-row');
 
-      // "없음" 로직
       if (name === 'disease') {
         if (value === '없음') {
-          grid.querySelectorAll('.choice-btn').forEach(function (b) {
-            b.classList.remove('selected');
-          });
+          parent.querySelectorAll('.pick-chip').forEach(function (b) { b.classList.remove('selected'); });
           this.classList.add('selected');
         } else {
-          grid.querySelector('[data-value="없음"]').classList.remove('selected');
+          parent.querySelector('[data-value="없음"]').classList.remove('selected');
           this.classList.toggle('selected');
         }
       } else {
         this.classList.toggle('selected');
       }
 
-      // 데이터 수집
       var selected = [];
-      grid.querySelectorAll('.choice-btn.selected').forEach(function (b) {
+      parent.querySelectorAll('.pick-chip.selected').forEach(function (b) {
         selected.push(b.getAttribute('data-value'));
       });
       formData[name] = selected;
 
-      // 다음 버튼 활성화
       var nextBtnId = name === 'disease' ? 'disease-next' : 'insurance-next';
       var nextBtn = document.getElementById(nextBtnId);
       if (nextBtn) nextBtn.disabled = selected.length === 0;
     });
   });
 
-  // ===== 출생연도 선택 =====
+  // ===== 출생연도 =====
   birthYearSelect.addEventListener('change', function () {
     formData.birthYear = this.value;
-    var nextBtn = document.getElementById('birth-year-next');
-    nextBtn.disabled = !this.value;
+    document.getElementById('birth-year-next').disabled = !this.value;
   });
 
-  // ===== 다음 버튼 클릭 =====
-  document.querySelectorAll('.next-btn[data-next]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
+  // ===== 다음 버튼 =====
+  document.querySelectorAll('[data-next]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
       if (this.disabled) return;
+      if (this.type === 'submit') return; // form submit 은 별도 처리
       var next = parseInt(this.getAttribute('data-next'));
       goToStep(next);
     });
@@ -112,56 +114,51 @@ document.addEventListener('DOMContentLoaded', function () {
   var phoneInput = document.getElementById('phone');
   phoneInput.addEventListener('input', function () {
     var v = this.value.replace(/[^0-9]/g, '');
-    if (v.length <= 3) {
-      this.value = v;
-    } else if (v.length <= 7) {
-      this.value = v.slice(0, 3) + '-' + v.slice(3);
-    } else {
-      this.value = v.slice(0, 3) + '-' + v.slice(3, 7) + '-' + v.slice(7, 11);
-    }
+    if (v.length <= 3) this.value = v;
+    else if (v.length <= 7) this.value = v.slice(0, 3) + '-' + v.slice(3);
+    else this.value = v.slice(0, 3) + '-' + v.slice(3, 7) + '-' + v.slice(7, 11);
   });
 
-  // ===== 개인정보 동의 토글 =====
+  // ===== 개인정보 토글 =====
   togglePrivacy.addEventListener('click', function () {
     privacyDetail.classList.toggle('open');
-    this.textContent = privacyDetail.classList.contains('open') ? '닫기' : '보기';
+    this.textContent = privacyDetail.classList.contains('open') ? '닫기' : '상세';
   });
 
-  // ===== 최종 폼 제출 =====
-  var finalForm = document.getElementById('final-form');
-  finalForm.addEventListener('submit', function (e) {
+  // ===== 최종 제출 =====
+  document.getElementById('final-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var valid = true;
-
     var nameInput = document.getElementById('name');
-    var nameError = document.getElementById('name-error');
+    var nameErr = document.getElementById('name-error');
+
     if (!nameInput.value.trim()) {
-      nameError.textContent = '이름을 입력해주세요.';
+      nameErr.textContent = '이름을 입력해주세요.';
       nameInput.classList.add('invalid');
       valid = false;
     } else {
-      nameError.textContent = '';
+      nameErr.textContent = '';
       nameInput.classList.remove('invalid');
     }
 
     var phoneVal = phoneInput.value.replace(/[^0-9]/g, '');
-    var phoneError = document.getElementById('phone-error');
-    if (!phoneVal || phoneVal.length < 10) {
-      phoneError.textContent = '올바른 연락처를 입력해주세요.';
+    var phoneErr = document.getElementById('phone-error');
+    if (phoneVal.length < 10) {
+      phoneErr.textContent = '올바른 연락처를 입력해주세요.';
       phoneInput.classList.add('invalid');
       valid = false;
     } else {
-      phoneError.textContent = '';
+      phoneErr.textContent = '';
       phoneInput.classList.remove('invalid');
     }
 
     var consent = document.getElementById('privacy-consent');
-    var consentError = document.getElementById('consent-error');
+    var consentErr = document.getElementById('consent-error');
     if (!consent.checked) {
-      consentError.textContent = '개인정보 수집에 동의해주세요.';
+      consentErr.textContent = '개인정보 수집에 동의해주세요.';
       valid = false;
     } else {
-      consentError.textContent = '';
+      consentErr.textContent = '';
     }
 
     if (!valid) return;
@@ -169,64 +166,45 @@ document.addEventListener('DOMContentLoaded', function () {
     formData.name = nameInput.value.trim();
     formData.phone = phoneInput.value;
     formData.submittedAt = new Date().toISOString();
-
     console.log('상담 신청 데이터:', JSON.stringify(formData, null, 2));
 
     successModal.classList.add('active');
-    finalForm.reset();
+    this.reset();
     goToStep(1);
     formData = {};
   });
 
-  // ===== 모달 닫기 =====
-  modalClose.addEventListener('click', function () {
-    successModal.classList.remove('active');
-  });
+  // ===== 모달 =====
+  modalClose.addEventListener('click', function () { successModal.classList.remove('active'); });
   successModal.addEventListener('click', function (e) {
     if (e.target === successModal) successModal.classList.remove('active');
   });
 
   // ===== 실시간 신청현황 =====
-  var surnames = ['김', '이', '박', '최', '정', '강', '조', '윤', '장', '임', '한', '오', '서', '신', '권', '황', '안', '송', '류', '홍'];
+  var surnames = ['김', '이', '박', '최', '정', '강', '조', '윤', '장', '임', '한', '오', '서', '신', '권', '황', '안', '송', '류', '홍', '전', '문', '배', '노'];
   var tbody = document.getElementById('status-tbody');
-  var maxRows = 8;
 
-  function randomPhone() {
-    var last2 = String(Math.floor(Math.random() * 100)).padStart(2, '0');
-    return '010-****-**' + last2;
-  }
-
-  function randomName() {
-    var s = surnames[Math.floor(Math.random() * surnames.length)];
-    return s + '**';
-  }
+  function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+  function randomName() { return surnames[rand(0, surnames.length - 1)] + '**'; }
+  function randomPhone() { return '010-****-**' + String(rand(10, 99)); }
 
   function addRow() {
     var tr = document.createElement('tr');
     tr.innerHTML =
       '<td>' + randomName() + '</td>' +
       '<td>' + randomPhone() + '</td>' +
-      '<td><span class="status-badge">접수완료</span></td>';
+      '<td><span class="badge-done">접수완료</span></td>';
     tbody.insertBefore(tr, tbody.firstChild);
-
-    // 최대 행 수 유지
-    while (tbody.children.length > maxRows) {
-      tbody.removeChild(tbody.lastChild);
-    }
+    while (tbody.children.length > 7) tbody.removeChild(tbody.lastChild);
   }
 
-  // 초기 5개 행 즉시 표시
-  for (var i = 0; i < 5; i++) {
-    addRow();
-  }
+  for (var i = 0; i < 5; i++) addRow();
 
-  // 랜덤 간격으로 새 행 추가 (5~15초)
-  function scheduleNextRow() {
-    var delay = 5000 + Math.floor(Math.random() * 10000);
+  function scheduleRow() {
     setTimeout(function () {
       addRow();
-      scheduleNextRow();
-    }, delay);
+      scheduleRow();
+    }, rand(4000, 12000));
   }
-  scheduleNextRow();
+  scheduleRow();
 });
