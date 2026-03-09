@@ -107,15 +107,22 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!hasEtc) document.getElementById('disease-etc-input').value = '';
       }
       if (name === 'insuranceType') {
-        var hasEtc2 = selected.indexOf('기타') !== -1;
-        insuranceEtc.style.display = hasEtc2 ? 'block' : 'none';
-        if (!hasEtc2) document.getElementById('insurance-etc-input').value = '';
+        // 기타 입력란은 항상 표시
       }
 
       var nextBtnId = name === 'disease' ? 'disease-next' : 'insurance-next';
       var nextBtn = document.getElementById(nextBtnId);
       if (nextBtn) nextBtn.disabled = selected.length === 0;
     });
+  });
+
+  // 기타 입력란에 텍스트 입력 시에도 다음 버튼 활성화
+  var insuranceEtcInput = document.getElementById('insurance-etc-input');
+  var insuranceNextBtn = document.getElementById('insurance-next');
+  insuranceEtcInput.addEventListener('input', function () {
+    var hasChips = document.querySelectorAll('.pick-chip.multi.selected[data-name="insuranceType"]').length > 0;
+    var hasText = insuranceEtcInput.value.trim().length > 0;
+    insuranceNextBtn.disabled = !(hasChips || hasText);
   });
 
   // ===== 출생연도 직접 입력 =====

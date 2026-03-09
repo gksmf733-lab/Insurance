@@ -264,6 +264,7 @@ body {
 }
 
 .pick-row.two { grid-template-columns: 1fr 1fr; }
+.pick-row.grid2 { grid-template-columns: repeat(2, 1fr); }
 .pick-row.grid3 { grid-template-columns: repeat(3, 1fr); }
 .pick-row.grid4 { grid-template-columns: repeat(4, 1fr); }
 
