@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보험 무료상담 신청</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 히어로 섹션 -->
+  <section class="hero">
+    <div class="container">
+      <h1>나에게 딱 맞는 보험,<br><span class="highlight">무료로 상담</span>받아보세요</h1>
+      <p class="subtitle">전문 설계사가 고객님의 상황에 맞는 최적의 보험을 추천해드립니다.</p>
+      <a href="#form-section" class="cta-btn">무료 상담 신청하기</a>
+    </div>
+  </section>
+
+  <!-- 혜택 섹션 -->
+  <section class="benefits">
+    <div class="container">
+      <h2>왜 보험상담을 받아야 할까요?</h2>
+      <div class="benefit-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">&#128176;</div>
+          <h3>보험료 절약</h3>
+          <p>현재 가입된 보험을 분석하여 불필요한 보장을 정리하고 보험료를 절약할 수 있습니다.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">&#128203;</div>
+          <h3>맞춤 보장 설계</h3>
+          <p>나이, 직업, 건강상태를 고려하여 꼭 필요한 보장만 골라 설계해드립니다.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">&#128101;</div>
+          <h3>전문가 1:1 상담</h3>
+          <p>경력 10년 이상의 전문 설계사가 친절하고 정확하게 상담해드립니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 상담 신청 폼 섹션 -->
+  <section id="form-section" class="form-section">
+    <div class="container">
+      <h2>무료 상담 신청</h2>
+      <p class="form-desc">아래 정보를 입력해주시면 전문 설계사가 연락드립니다.</p>
+
+      <form id="consultation-form" class="consultation-form" novalidate>
+        <!-- 이름 -->
+        <div class="form-group">
+          <label for="name">이름 <span class="required">*</span></label>
+          <input type="text" id="name" name="name" placeholder="홍길동" required>
+          <span class="error-msg" id="name-error"></span>
+        </div>
+
+        <!-- 연락처 -->
+        <div class="form-group">
+          <label for="phone">연락처 <span class="required">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="010-1234-5678" required>
+          <span class="error-msg" id="phone-error"></span>
+        </div>
+
+        <!-- 성별 -->
+        <div class="form-group">
+          <label>성별 <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="gender" value="남성" required> 남성
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="gender" value="여성"> 여성
+            </label>
+          </div>
+          <span class="error-msg" id="gender-error"></span>
+        </div>
+
+        <!-- 출생연도 -->
+        <div class="form-group">
+          <label for="birth-year">출생연도 <span class="required">*</span></label>
+          <select id="birth-year" name="birthYear" required>
+            <option value="">출생연도 선택</option>
+          </select>
+          <span class="error-msg" id="birth-year-error"></span>
+        </div>
+
+        <!-- 지역 -->
+        <div class="form-group">
+          <label for="region">거주 지역 <span class="required">*</span></label>
+          <select id="region" name="region" required>
+            <option value="">지역 선택</option>
+            <option value="서울">서울</option>
+            <option value="경기">경기</option>
+            <option value="인천">인천</option>
+            <option value="부산">부산</option>
+            <option value="대구">대구</option>
+            <option value="광주">광주</option>
+            <option value="대전">대전</option>
+            <option value="울산">울산</option>
+            <option value="세종">세종</option>
+            <option value="강원">강원</option>
+            <option value="충북">충북</option>
+            <option value="충남">충남</option>
+            <option value="전북">전북</option>
+            <option value="전남">전남</option>
+            <option value="경북">경북</option>
+            <option value="경남">경남</option>
+            <option value="제주">제주</option>
+          </select>
+          <span class="error-msg" id="region-error"></span>
+        </div>
+
+        <!-- 기존 질병 -->
+        <div class="form-group">
+          <label>기존 질병 <span class="required">*</span></label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="disease" value="없음" id="disease-none"> 없음
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="disease" value="당뇨"> 당뇨
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="disease" value="고혈압"> 고혈압
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="disease" value="통풍"> 통풍
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="disease" value="기타"> 기타
+            </label>
+          </div>
+          <span class="error-msg" id="disease-error"></span>
+        </div>
+
+        <!-- 원하는 보험 종류 -->
+        <div class="form-group">
+          <label>원하는 보험 종류 <span class="required">*</span></label>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="실손보험"> 실손보험
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="암보험"> 암보험
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="종신보험"> 종신보험
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="연금보험"> 연금보험
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="자동차보험"> 자동차보험
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="운전자보험"> 운전자보험
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="어린이보험"> 어린이보험
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="insuranceType" value="치아보험"> 치아보험
+            </label>
+          </div>
+          <span class="error-msg" id="insurance-type-error"></span>
+        </div>
+
+        <!-- 개인정보 수집 동의 -->
+        <div class="form-group consent-group">
+          <label class="checkbox-label consent-label">
+            <input type="checkbox" id="privacy-consent" name="privacyConsent" required>
+            <span>[필수] 개인정보 수집 및 이용에 동의합니다.</span>
+          </label>
+          <button type="button" class="toggle-privacy" id="toggle-privacy">내용 보기</button>
+          <div class="privacy-detail" id="privacy-detail">
+            <p><strong>개인정보 수집 및 이용 안내</strong></p>
+            <p><strong>수집 항목:</strong> 이름, 연락처, 성별, 출생연도, 거주 지역, 기존 질병, 관심 보험 종류</p>
+            <p><strong>수집 목적:</strong> 보험 상담 서비스 제공 및 맞춤 상품 안내</p>
+            <p><strong>보유 기간:</strong> 수집일로부터 1년 (동의 철회 시 즉시 파기)</p>
+            <p>개인정보 수집에 동의하지 않을 권리가 있으며, 동의 거부 시 상담 서비스 이용이 제한됩니다.</p>
+          </div>
+          <span class="error-msg" id="consent-error"></span>
+        </div>
+
+        <button type="submit" class="submit-btn">무료 상담 신청하기</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 성공 모달 -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal">
+      <div class="modal-icon">&#10004;</div>
+      <h3>상담 신청이 완료되었습니다!</h3>
+      <p>입력하신 연락처로 영업일 기준 1일 이내에 전문 설계사가 연락드리겠습니다.</p>
+      <button class="modal-close-btn" id="modal-close">확인</button>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 보험상담센터. All rights reserved.</p>
+      <p class="footer-notice">본 페이지는 보험 상담 연결 서비스이며, 보험 계약 체결을 강요하지 않습니다.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

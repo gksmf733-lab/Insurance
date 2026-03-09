@@ -1,0 +1,427 @@
+/* Reset & Base */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Noto Sans KR', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  background: #f8f9fa;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== Hero ===== */
+.hero {
+  background: linear-gradient(135deg, #1a3a5c 0%, #2d6a9f 100%);
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px 60px;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+.hero .highlight {
+  color: #ffd54f;
+}
+
+.hero .subtitle {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  margin-bottom: 32px;
+}
+
+.cta-btn {
+  display: inline-block;
+  background: #ffd54f;
+  color: #1a3a5c;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 14px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 213, 79, 0.4);
+}
+
+/* ===== Benefits ===== */
+.benefits {
+  padding: 60px 20px;
+  background: #fff;
+}
+
+.benefits h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+  color: #1a3a5c;
+}
+
+.benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.benefit-card {
+  text-align: center;
+  padding: 32px 20px;
+  border-radius: 12px;
+  background: #f0f6ff;
+  transition: transform 0.2s;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+.benefit-card h3 {
+  font-size: 1.1rem;
+  color: #1a3a5c;
+  margin-bottom: 8px;
+}
+
+.benefit-card p {
+  font-size: 0.92rem;
+  color: #555;
+}
+
+/* ===== Form Section ===== */
+.form-section {
+  padding: 60px 20px;
+  background: #f8f9fa;
+}
+
+.form-section h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #1a3a5c;
+  margin-bottom: 8px;
+}
+
+.form-desc {
+  text-align: center;
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.consultation-form {
+  background: #fff;
+  padding: 36px 28px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: #e53935;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  background: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2d6a9f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 159, 0.1);
+}
+
+.form-group input.invalid,
+.form-group select.invalid {
+  border-color: #e53935;
+}
+
+.error-msg {
+  display: block;
+  color: #e53935;
+  font-size: 0.82rem;
+  margin-top: 4px;
+  min-height: 18px;
+}
+
+/* Radio & Checkbox */
+.radio-group,
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.radio-label,
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400 !important;
+  cursor: pointer;
+  padding: 8px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.2s, background 0.2s;
+  font-size: 0.92rem;
+}
+
+.radio-label:hover,
+.checkbox-label:hover {
+  border-color: #2d6a9f;
+  background: #f0f6ff;
+}
+
+.radio-label input:checked + *,
+.radio-label:has(input:checked) {
+  border-color: #2d6a9f;
+  background: #e8f0fe;
+}
+
+.checkbox-label:has(input:checked) {
+  border-color: #2d6a9f;
+  background: #e8f0fe;
+}
+
+/* Consent */
+.consent-group {
+  background: #f9f9f9;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.consent-label {
+  border: none !important;
+  padding: 0 !important;
+  font-size: 0.9rem !important;
+}
+
+.consent-label span {
+  font-weight: 500 !important;
+}
+
+.toggle-privacy {
+  background: none;
+  border: none;
+  color: #2d6a9f;
+  font-size: 0.82rem;
+  cursor: pointer;
+  margin-top: 8px;
+  text-decoration: underline;
+}
+
+.privacy-detail {
+  display: none;
+  margin-top: 12px;
+  padding: 14px;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.privacy-detail.open {
+  display: block;
+}
+
+.privacy-detail p {
+  margin-bottom: 6px;
+}
+
+/* Submit */
+.submit-btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #1a3a5c, #2d6a9f);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.submit-btn:hover {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== Modal ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  padding: 40px 32px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: modalIn 0.3s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-icon {
+  width: 60px;
+  height: 60px;
+  background: #4caf50;
+  color: #fff;
+  font-size: 1.8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.modal h3 {
+  font-size: 1.2rem;
+  color: #1a3a5c;
+  margin-bottom: 8px;
+}
+
+.modal p {
+  color: #666;
+  font-size: 0.92rem;
+  margin-bottom: 24px;
+}
+
+.modal-close-btn {
+  padding: 12px 40px;
+  background: #2d6a9f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== Footer ===== */
+.footer {
+  background: #1a3a5c;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 24px 20px;
+  font-size: 0.82rem;
+}
+
+.footer-notice {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  opacity: 0.6;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .hero {
+    padding: 60px 16px 48px;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .cta-btn {
+    font-size: 1rem;
+    padding: 12px 32px;
+  }
+
+  .consultation-form {
+    padding: 24px 18px;
+  }
+
+  .benefit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .radio-group,
+  .checkbox-group {
+    gap: 8px;
+  }
+
+  .radio-label,
+  .checkbox-label {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
