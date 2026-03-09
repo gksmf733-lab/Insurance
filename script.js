@@ -272,11 +272,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ===== 실시간 신청현황 =====
   var surnames = ['김', '이', '박', '최', '정', '강', '조', '윤', '장', '임', '한', '오', '서', '신', '권', '황', '안', '송', '류', '홍', '전', '문', '배', '노'];
+  var insuranceTypes = ['자동차보험', '실손보험', '암보험', '종신보험', '치아보험', '운전자보험', '화재보험', '여행자보험', '건강보험', '어린이보험', '연금보험', '태아보험'];
   var tbody = document.getElementById('status-tbody');
 
   function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
   function randomName() { return surnames[rand(0, surnames.length - 1)] + '**'; }
   function randomPhone() { return '010-****-**' + String(rand(10, 99)); }
+  function randomInsurance() { return insuranceTypes[rand(0, insuranceTypes.length - 1)]; }
+  function todayStr() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return m + '.' + day;
+  }
 
   function addRow() {
     var tr = document.createElement('tr');
@@ -284,11 +292,11 @@ document.addEventListener('DOMContentLoaded', function () {
     tr.style.transform = 'translateY(-10px)';
     tr.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
     tr.innerHTML =
+      '<td>' + todayStr() + '</td>' +
       '<td>' + randomName() + '</td>' +
       '<td>' + randomPhone() + '</td>' +
-      '<td><span class="badge-done">접수완료</span></td>';
+      '<td><span class="badge-done">' + randomInsurance() + '</span></td>';
     tbody.insertBefore(tr, tbody.firstChild);
-    // trigger reflow then animate in
     tr.offsetHeight;
     tr.style.opacity = '1';
     tr.style.transform = 'translateY(0)';
