@@ -280,21 +280,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function addRow() {
     var tr = document.createElement('tr');
+    tr.style.opacity = '0';
+    tr.style.transform = 'translateY(-10px)';
+    tr.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
     tr.innerHTML =
       '<td>' + randomName() + '</td>' +
       '<td>' + randomPhone() + '</td>' +
       '<td><span class="badge-done">접수완료</span></td>';
     tbody.insertBefore(tr, tbody.firstChild);
+    // trigger reflow then animate in
+    tr.offsetHeight;
+    tr.style.opacity = '1';
+    tr.style.transform = 'translateY(0)';
     while (tbody.children.length > 7) tbody.removeChild(tbody.lastChild);
   }
 
-  for (var i = 0; i < 5; i++) addRow();
-
-  function scheduleRow() {
-    setTimeout(function () {
-      addRow();
-      scheduleRow();
-    }, rand(4000, 12000));
-  }
-  scheduleRow();
+  // 처음에 1개만 보여주고, 3초마다 하나씩 추가
+  addRow();
+  setInterval(addRow, 3000);
 });
