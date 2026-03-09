@@ -822,13 +822,55 @@ body {
 /* ===== Footer ===== */
 .footer {
   background: #1a1a2e;
-  color: rgba(255,255,255,0.4);
-  text-align: center;
-  padding: 24px 20px;
+  color: rgba(255,255,255,0.45);
+  padding: 48px 20px 32px;
   font-size: 0.75rem;
+  line-height: 1.7;
 }
 
-.footer p + p { margin-top: 4px; }
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.footer-info h3,
+.footer-contact h3 {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footer-info p { margin-bottom: 2px; }
+
+.footer-phone {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 4px;
+}
+
+.footer-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 24px 0;
+}
+
+.footer-legal p {
+  margin-bottom: 8px;
+}
+
+.footer-legal-gap {
+  margin-bottom: 16px !important;
+}
+
+.footer-copyright {
+  text-align: center;
+  color: rgba(255,255,255,0.3);
+  margin-top: 8px;
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
