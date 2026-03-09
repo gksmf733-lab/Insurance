@@ -27,7 +27,7 @@
     <section class="hero-form">
       <div class="hero-bg">
         <div class="hero-text">
-          <h1>보험료,<br>얼마나 <em>아낄 수</em> 있을까?</h1>
+          <h1>나에게 딱 맞는 맞춤 보험의<br><em>통합 보험료</em>를 실시간으로 비교해드려요</h1>
           <p>최대 20개 보험사 실시간 비교</p>
         </div>
       </div>
@@ -50,14 +50,15 @@
 
           <!-- Step 1: 인트로 -->
           <div class="step active" data-step="1">
-            <p class="intro-safe-text">고객님의 소중한 개인정보는<br>안전하게 보호됩니다.</p>
-            <h2>30초만에 내 보험료 비교</h2>
+            <p class="intro-highlight">놓쳐서 손해보는 보험료를<br>바로 점검해보세요!</p>
+            <h2>통합보험 안심 비교견적</h2>
             <div class="tag-row">
               <span class="tag">무료상담</span>
               <span class="tag">간편비교</span>
               <span class="tag">안심보장</span>
             </div>
-            <button type="button" class="btn-primary full" data-next="2">안심견적 비교 시작하기</button>
+            <button type="button" class="btn-primary full" data-next="2">통합보험 비교견적</button>
+            <p class="small-note">고객님의 소중한 개인정보는 안전하게 보호됩니다.</p>
           </div>
 
           <!-- Step 2: 성별 -->
@@ -84,7 +85,7 @@
               <span class="birth-year-suffix">년</span>
             </div>
             <span class="err" id="birth-year-error"></span>
-            <button type="button" class="btn-primary" id="birth-year-next" data-next="4" disabled>다음 단계</button>
+            <button type="button" class="btn-primary full" id="birth-year-next" data-next="4" disabled>다음 단계</button>
           </div>
 
           <!-- Step 4: 지역 -->
@@ -126,7 +127,7 @@
               <label for="disease-etc-input">어떤 질병이 있으신지 알려주세요</label>
               <input type="text" id="disease-etc-input" class="etc-input" placeholder="예: 갑상선, 허리디스크 등">
             </div>
-            <button type="button" class="btn-primary" id="disease-next" data-next="6" disabled>다음 단계</button>
+            <button type="button" class="btn-primary full" id="disease-next" data-next="6" disabled>다음 단계</button>
           </div>
 
           <!-- Step 6: 보험 종류 -->
@@ -148,7 +149,7 @@
               <label for="insurance-etc-input">어떤 보험이 필요하신지 작성해주세요</label>
               <input type="text" id="insurance-etc-input" class="etc-input" placeholder="예: 여행자보험, 펫보험 등">
             </div>
-            <button type="button" class="btn-primary" id="insurance-next" data-next="7" disabled>다음 단계</button>
+            <button type="button" class="btn-primary full" id="insurance-next" data-next="7" disabled>다음 단계</button>
           </div>
 
           <!-- Step 7: 연락처 -->
@@ -172,9 +173,19 @@
                 <button type="button" class="agree-toggle" id="toggle-privacy">상세</button>
               </label>
               <div class="privacy-box" id="privacy-detail">
-                <p><b>수집 항목:</b> 이름, 연락처, 성별, 출생연도, 지역, 질병, 관심 보험</p>
-                <p><b>목적:</b> 보험 상담 서비스 제공</p>
-                <p><b>보유:</b> 1년 (동의 철회 시 즉시 파기)</p>
+                <p><b>개인정보 수집·이용 및 제3자 제공 동의</b></p>
+                <p><b>개인정보 수집·이용 동의</b></p>
+                <p>[개인정보 수집 및 이용 동의 내용] 귀하가 금융상품 소개 등을 위하여 본인의 개인(신용)정보를 수집 이용하고자 하는 경우에는 [개인정보보호법]제15조 및 제22조, [신용정보의 이용 및 보호에 관한 법률] 제32조 및 제33조에 따라 동의를 얻어야 합니다. 이에 본인은 귀사가 아래의 내용과 같이 영업목적으로 본인의 개인(신용)정보를 수집, 이용하는데 동의합니다.</p>
+                <p><b>1. 개인정보의 수집·이용목적 :</b></p>
+                <p>– 서비스 이용에 따른 본인 식별 절차 및 개인 맞춤 서비스를 제공</p>
+                <p>– 보험상품, 서비스 소개 및 판매, 사은/판촉행사안내(전화,SMS포함)</p>
+                <p>– 고지사항 전달, 본인 의사 확인, 불만 처리 등 원활한 보험관련 의사소통 경로의 확보</p>
+                <p><b>2. 수집이용할 개인(신용)정보의 내용 :</b> 성명, 생년월일, 연락처, 거주지</p>
+                <p><b>3. 개인(신용)정보의 보유, 이용기간 :</b> 수집, 이용 동의일로부터 고객님의 동의 철회시까지 보관하여, 042-486-9800으로 전화주시면 철회가능 (단, 1년)</p>
+                <p><b>4.</b> 개인정보수집을 동의하지 않는 경우 이용자의 개인정보수집 동의를 거부할 권리가 있으며 이에 대한 동의를 하시지 않은 경우에는 보험설계 및 상담 서비스 제공이 제한됩니다.</p>
+                <p><b>5. 수집자 :</b> ㈜엠금융서비스</p>
+                <p>* 정보 동의시 계약상담 및 가입설계를 위해 최소한의 정보만 수집, 이용 조회하게 되며, 본동의를 거부하시는 경우 보험계약 상담등 정상적인 서비스 제공이 불가능할수 있습니다.</p>
+                <p>– 현 개인정보 수집/이용에 관한 사항의 내용 추가, 삭제, 수정이 있을 시에는 개정 최소 7일 전부터 회사 인터넷 홈페이지 등을 통해 고지하겠습니다.</p>
               </div>
               <span class="err" id="consent-error"></span>
               <button type="submit" class="btn-primary full btn-submit">상담 신청 완료</button>
@@ -285,8 +296,29 @@
   <!-- 푸터 -->
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2026 보험비교. All rights reserved.</p>
-      <p>본 페이지는 보험 상담 연결 서비스이며, 계약 체결을 강요하지 않습니다.</p>
+      <div class="footer-top">
+        <div class="footer-info">
+          <h3>통합보험 비교견적</h3>
+          <p>최저가 보험 비교견적 서비스를 제공합니다.</p>
+          <p>20개 이상의 보험사를 한 번에 비교하고</p>
+          <p>맞춤형 보험 상담을 받아보세요.</p>
+        </div>
+        <div class="footer-contact">
+          <h3>고객센터</h3>
+          <p class="footer-phone">1670-9275</p>
+          <p>평일 09:00 ~ 18:00 (주말·공휴일 휴무)</p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-legal">
+        <p>M금융서비스(대리점등록번호: 2009028021)</p>
+        <p class="footer-legal-gap">보험설계사(임지유 협회 등록번호: 20190981110007) (본 광고는 광고심의기준을 준수하였으며, 유효기간은 심의일로부터 1년입니다.) 엠금융서비스 준법 심의필 25-11-062(2025 11 21 ~ 2026 11 20)</p>
+        <p>*유의사항 상기내용은 모집종사자의 개인의견이며, 계약체결에 따른 이익 또는 손실은 보험계약자 등에 귀속됩니다. 보험회사 상품별, 성별, 연령, 직업에 따라 가입 가능한 담보와 가입금액 보험료등은 달라질 수 있습니다. 보험사 및 상품별로 상이할 수 있으므로 관련한 세부사항은 반드시 해당 약관을 참조 하시기 바랍니다.</p>
+        <p>보험계약자가 기존 보험계약을 해지하고 새로운 보험계약을 체결하는 과정에서 질병이력, 연령증가 등으로 가입이 거절되거나 보험료가 인상될 수 있습니다.</p>
+        <p>가입상품에 따라 새로운 보험금지급 제한기간 적용 및 보장제한등 기타불이익이 발생할 수 있습니다.</p>
+      </div>
+      <div class="footer-divider"></div>
+      <p class="footer-copyright">&copy; Copyright.2025. GoodRich co.Ltd. All Rights Reserved.</p>
     </div>
   </footer>
 
