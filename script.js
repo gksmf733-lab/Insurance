@@ -107,15 +107,22 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!hasEtc) document.getElementById('disease-etc-input').value = '';
       }
       if (name === 'insuranceType') {
-        var hasEtc2 = selected.indexOf('기타') !== -1;
-        insuranceEtc.style.display = hasEtc2 ? 'block' : 'none';
-        if (!hasEtc2) document.getElementById('insurance-etc-input').value = '';
+        // 기타 입력란은 항상 표시
       }
 
       var nextBtnId = name === 'disease' ? 'disease-next' : 'insurance-next';
       var nextBtn = document.getElementById(nextBtnId);
       if (nextBtn) nextBtn.disabled = selected.length === 0;
     });
+  });
+
+  // 기타 입력란에 텍스트 입력 시에도 다음 버튼 활성화
+  var insuranceEtcInput = document.getElementById('insurance-etc-input');
+  var insuranceNextBtn = document.getElementById('insurance-next');
+  insuranceEtcInput.addEventListener('input', function () {
+    var hasChips = document.querySelectorAll('.pick-chip.multi.selected[data-name="insuranceType"]').length > 0;
+    var hasText = insuranceEtcInput.value.trim().length > 0;
+    insuranceNextBtn.disabled = !(hasChips || hasText);
   });
 
   // ===== 출생연도 직접 입력 =====
@@ -222,9 +229,50 @@ document.addEventListener('DOMContentLoaded', function () {
     var insuranceEtcVal = document.getElementById('insurance-etc-input').value.trim();
     if (insuranceEtcVal) formData.insuranceTypeEtc = insuranceEtcVal;
     formData.submittedAt = new Date().toISOString();
-    console.log('상담 신청 데이터:', JSON.stringify(formData, null, 2));
 
-    successModal.classList.add('active');
+    // 질병 정보 조합
+    var diseaseText = (formData.disease || []).join(', ');
+    if (formData.diseaseEtc) diseaseText += (diseaseText ? ', ' : '') + formData.diseaseEtc;
+
+    // 보험종류 조합
+    var insuranceText = (formData.insuranceType || []).join(', ');
+    if (formData.insuranceTypeEtc) insuranceText += (insuranceText ? ', ' : '') + formData.insuranceTypeEtc;
+
+    // Google Sheets 전송
+    var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzKyz_KNR-RswNIti0p_TIwWeqNbakdBD4Olaj-eEou7FnLcrioJxKNOvbF5vDnW297ug/exec';
+    var submitBtn = document.querySelector('[type="submit"]');
+
+    if (GOOGLE_SHEET_URL) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = '전송 중...';
+
+      fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          submittedAt: formData.submittedAt,
+          name: formData.name,
+          phone: formData.phone,
+          gender: formData.gender || '',
+          birthYear: formData.birthYear || '',
+          region: formData.region || '',
+          disease: diseaseText,
+          insuranceType: insuranceText
+        })
+      }).then(function () {
+        successModal.classList.add('active');
+      }).catch(function () {
+        successModal.classList.add('active');
+      }).finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '무료 상담 신청하기';
+      });
+    } else {
+      console.log('상담 신청 데이터:', JSON.stringify(formData, null, 2));
+      successModal.classList.add('active');
+    }
+
     this.reset();
     goToStep(1);
     formData = {};
