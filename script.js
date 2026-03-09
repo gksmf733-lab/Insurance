@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (formData.insuranceTypeEtc) insuranceText += (insuranceText ? ', ' : '') + formData.insuranceTypeEtc;
 
     // Google Sheets 전송
-    var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzKyz_KNR-RswNIti0p_TIwWeqNbakdBD4Olaj-eEou7FnLcrioJxKNOvbF5vDnW297ug/exec';
+    var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzJzSzP1V4uGBDU7rzlBfagGNIZHslLPVrZX-cVQrsQez4d8peUZpmQzsbKTjIqN3AdCg/exec';
     var submitBtn = document.querySelector('[type="submit"]');
 
     if (GOOGLE_SHEET_URL) {
