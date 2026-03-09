@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var successModal = document.getElementById('success-modal');
   var modalClose = document.getElementById('modal-close');
 
-  var stepLabels = ['시작하기', '성별 선택', '출생연도', '거주 지역', '질병 여부', '보험 선택', '연락처 입력'];
+  var stepLabels = ['', '성별 선택', '출생연도', '거주 지역', '질병 여부', '보험 선택', '연락처 입력'];
 
   // ===== 경고 팝업 모달 =====
   var alertModal = document.getElementById('alert-modal');
