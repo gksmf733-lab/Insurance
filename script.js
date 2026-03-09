@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (formData.insuranceTypeEtc) insuranceText += (insuranceText ? ', ' : '') + formData.insuranceTypeEtc;
 
     // Google Sheets 전송
-    var GOOGLE_SHEET_URL = ''; // ← 여기에 Google Apps Script 웹 앱 URL 붙여넣기
+    var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzKyz_KNR-RswNIti0p_TIwWeqNbakdBD4Olaj-eEou7FnLcrioJxKNOvbF5vDnW297ug/exec';
     var submitBtn = document.querySelector('[type="submit"]');
 
     if (GOOGLE_SHEET_URL) {
