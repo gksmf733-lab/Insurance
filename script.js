@@ -180,6 +180,40 @@ document.addEventListener('DOMContentLoaded', function () {
     if (e.target === successModal) successModal.classList.remove('active');
   });
 
+  // ===== 노하우 카드 3D 틸트 효과 =====
+  document.querySelectorAll('[data-tilt]').forEach(function (card) {
+    var shine = card.querySelector('.tip-shine');
+
+    card.addEventListener('mousemove', function (e) {
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var centerX = rect.width / 2;
+      var centerY = rect.height / 2;
+      var rotateX = (y - centerY) / centerY * -12;
+      var rotateY = (x - centerX) / centerX * 12;
+
+      card.style.transform = 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale3d(1.03, 1.03, 1.03)';
+
+      // 빛 반사 위치
+      var mx = (x / rect.width * 100).toFixed(1);
+      var my = (y / rect.height * 100).toFixed(1);
+      if (shine) {
+        shine.style.setProperty('--mx', mx + '%');
+        shine.style.setProperty('--my', my + '%');
+      }
+    });
+
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      card.style.transition = 'transform 0.5s ease, box-shadow 0.25s';
+    });
+
+    card.addEventListener('mouseenter', function () {
+      card.style.transition = 'box-shadow 0.25s';
+    });
+  });
+
   // ===== 실시간 신청현황 =====
   var surnames = ['김', '이', '박', '최', '정', '강', '조', '윤', '장', '임', '한', '오', '서', '신', '권', '황', '안', '송', '류', '홍', '전', '문', '배', '노'];
   var tbody = document.getElementById('status-tbody');

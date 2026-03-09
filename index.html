@@ -62,7 +62,7 @@
               <span class="tag">간편비교</span>
               <span class="tag">맞춤분석</span>
             </div>
-            <button class="btn-primary full" data-next="2">비교견적 시작하기</button>
+            <button type="button" class="btn-primary full" data-next="2">비교견적 시작하기</button>
             <p class="small-note">개인정보는 안전하게 보호됩니다</p>
           </div>
 
@@ -87,7 +87,7 @@
             <select class="styled-select" id="birth-year" name="birthYear">
               <option value="">선택</option>
             </select>
-            <button class="btn-primary" id="birth-year-next" data-next="4" disabled>다음 단계</button>
+            <button type="button" class="btn-primary" id="birth-year-next" data-next="4" disabled>다음 단계</button>
           </div>
 
           <!-- Step 4: 지역 -->
@@ -125,7 +125,7 @@
               <button class="pick-chip multi" data-name="disease" data-value="통풍">통풍</button>
               <button class="pick-chip multi" data-name="disease" data-value="기타">기타</button>
             </div>
-            <button class="btn-primary" id="disease-next" data-next="6" disabled>다음 단계</button>
+            <button type="button" class="btn-primary" id="disease-next" data-next="6" disabled>다음 단계</button>
           </div>
 
           <!-- Step 6: 보험 종류 -->
@@ -142,7 +142,7 @@
               <button class="pick-chip multi" data-name="insuranceType" data-value="어린이보험">어린이보험</button>
               <button class="pick-chip multi" data-name="insuranceType" data-value="치아보험">치아보험</button>
             </div>
-            <button class="btn-primary" id="insurance-next" data-next="7" disabled>다음 단계</button>
+            <button type="button" class="btn-primary" id="insurance-next" data-next="7" disabled>다음 단계</button>
           </div>
 
           <!-- Step 7: 연락처 -->
@@ -190,7 +190,8 @@
         <span class="section-label">INSURANCE TIPS</span>
         <h2 class="section-title">똑똑한 보험 가입 노하우</h2>
         <div class="tips-grid">
-          <div class="tip-card">
+          <div class="tip-card" data-tilt>
+            <div class="tip-shine"></div>
             <div class="tip-num">01</div>
             <h3>여러 보험사<br>동시에 비교</h3>
             <p>20개 이상 보험사를 한 번에 비교하여 최대 40%까지 보험료를 절감할 수 있습니다.</p>
@@ -200,7 +201,8 @@
               <li>최저가 보험료 확인</li>
             </ul>
           </div>
-          <div class="tip-card featured">
+          <div class="tip-card featured" data-tilt>
+            <div class="tip-shine"></div>
             <div class="tip-num">02</div>
             <h3>생애주기별<br>보험 리모델링</h3>
             <p>결혼, 출산, 은퇴 등 생애 변화에 맞춰 보험을 정기적으로 재설계하세요.</p>
@@ -210,7 +212,8 @@
               <li>갱신 시기 재비교 필수</li>
             </ul>
           </div>
-          <div class="tip-card">
+          <div class="tip-card" data-tilt>
+            <div class="tip-shine"></div>
             <div class="tip-num">03</div>
             <h3>전문가 상담<br>적극 활용</h3>
             <p>복잡한 약관과 특약, 전문 설계사의 무료 상담으로 쉽게 이해하세요.</p>
