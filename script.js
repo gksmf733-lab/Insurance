@@ -64,6 +64,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ===== 복수 선택 (multi) =====
+  var diseaseEtc = document.getElementById('disease-etc');
+  var insuranceEtc = document.getElementById('insurance-etc');
+
   document.querySelectorAll('.pick-chip.multi').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var name = this.getAttribute('data-name');
@@ -87,6 +90,18 @@ document.addEventListener('DOMContentLoaded', function () {
         selected.push(b.getAttribute('data-value'));
       });
       formData[name] = selected;
+
+      // 기타 메모 토글
+      if (name === 'disease') {
+        var hasEtc = selected.indexOf('기타') !== -1;
+        diseaseEtc.style.display = hasEtc ? 'block' : 'none';
+        if (!hasEtc) document.getElementById('disease-etc-input').value = '';
+      }
+      if (name === 'insuranceType') {
+        var hasEtc2 = selected.indexOf('기타') !== -1;
+        insuranceEtc.style.display = hasEtc2 ? 'block' : 'none';
+        if (!hasEtc2) document.getElementById('insurance-etc-input').value = '';
+      }
 
       var nextBtnId = name === 'disease' ? 'disease-next' : 'insurance-next';
       var nextBtn = document.getElementById(nextBtnId);
@@ -165,6 +180,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     formData.name = nameInput.value.trim();
     formData.phone = phoneInput.value;
+    var diseaseEtcVal = document.getElementById('disease-etc-input').value.trim();
+    if (diseaseEtcVal) formData.diseaseEtc = diseaseEtcVal;
+    var insuranceEtcVal = document.getElementById('insurance-etc-input').value.trim();
+    if (insuranceEtcVal) formData.insuranceTypeEtc = insuranceEtcVal;
     formData.submittedAt = new Date().toISOString();
     console.log('상담 신청 데이터:', JSON.stringify(formData, null, 2));
 
