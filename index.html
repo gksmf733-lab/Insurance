@@ -84,9 +84,12 @@
           <!-- Step 3: 출생연도 -->
           <div class="step" data-step="3">
             <h2>출생연도를 알려주세요</h2>
-            <select class="styled-select" id="birth-year" name="birthYear">
-              <option value="">선택</option>
-            </select>
+            <p class="step-hint">태어난 연도 4자리를 입력해주세요</p>
+            <div class="birth-year-field">
+              <input type="tel" id="birth-year" class="birth-year-input" placeholder="예: 1990" maxlength="4" inputmode="numeric">
+              <span class="birth-year-suffix">년</span>
+            </div>
+            <span class="err" id="birth-year-error"></span>
             <button type="button" class="btn-primary" id="birth-year-next" data-next="4" disabled>다음 단계</button>
           </div>
 
@@ -259,6 +262,18 @@
     </section>
 
   </main>
+
+  <!-- 경고 팝업 모달 -->
+  <div class="modal-overlay" id="alert-modal">
+    <div class="modal">
+      <div class="modal-check modal-warn">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+      </div>
+      <h3 id="alert-modal-title">입력 오류</h3>
+      <p id="alert-modal-msg">내용을 확인해주세요.</p>
+      <button class="btn-primary" id="alert-modal-close">확인</button>
+    </div>
+  </div>
 
   <!-- 성공 모달 -->
   <div class="modal-overlay" id="success-modal">
