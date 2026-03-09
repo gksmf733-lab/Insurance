@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var dots = document.querySelectorAll('#progress-dots .dot');
   var stepLabel = document.getElementById('step-label');
   var backBtn = document.getElementById('back-btn');
-  var birthYearSelect = document.getElementById('birth-year');
+  var birthYearInput = document.getElementById('birth-year');
   var togglePrivacy = document.getElementById('toggle-privacy');
   var privacyDetail = document.getElementById('privacy-detail');
   var successModal = document.getElementById('success-modal');
@@ -14,13 +14,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var stepLabels = ['시작하기', '성별 선택', '출생연도', '거주 지역', '질병 여부', '보험 선택', '연락처 입력'];
 
-  // ===== 출생연도 =====
-  for (var y = 2010; y >= 1940; y--) {
-    var opt = document.createElement('option');
-    opt.value = y;
-    opt.textContent = y + '년';
-    birthYearSelect.appendChild(opt);
+  // ===== 경고 팝업 모달 =====
+  var alertModal = document.getElementById('alert-modal');
+  var alertModalTitle = document.getElementById('alert-modal-title');
+  var alertModalMsg = document.getElementById('alert-modal-msg');
+  var alertModalClose = document.getElementById('alert-modal-close');
+
+  function showAlert(title, msg) {
+    alertModalTitle.textContent = title;
+    alertModalMsg.textContent = msg;
+    alertModal.classList.add('active');
   }
+
+  alertModalClose.addEventListener('click', function () { alertModal.classList.remove('active'); });
+  alertModal.addEventListener('click', function (e) {
+    if (e.target === alertModal) alertModal.classList.remove('active');
+  });
 
   // ===== 스텝 이동 =====
   function goToStep(step) {
@@ -109,10 +118,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // ===== 출생연도 =====
-  birthYearSelect.addEventListener('change', function () {
-    formData.birthYear = this.value;
-    document.getElementById('birth-year-next').disabled = !this.value;
+  // ===== 출생연도 직접 입력 =====
+  var birthYearErr = document.getElementById('birth-year-error');
+
+  birthYearInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    var v = this.value;
+    var yearNum = parseInt(v);
+    var currentYear = new Date().getFullYear();
+    var valid = v.length === 4 && yearNum >= 1940 && yearNum <= currentYear;
+
+    if (valid) {
+      formData.birthYear = v;
+      birthYearErr.textContent = '';
+      birthYearInput.classList.remove('invalid');
+      document.getElementById('birth-year-next').disabled = false;
+    } else {
+      document.getElementById('birth-year-next').disabled = true;
+      if (v.length === 4) {
+        birthYearErr.textContent = '1940년 ~ ' + currentYear + '년 사이로 입력해주세요.';
+        birthYearInput.classList.add('invalid');
+      } else {
+        birthYearErr.textContent = '';
+        birthYearInput.classList.remove('invalid');
+      }
+    }
   });
 
   // ===== 다음 버튼 =====
@@ -144,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('final-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var valid = true;
+    var alertMsg = '';
     var nameInput = document.getElementById('name');
     var nameErr = document.getElementById('name-error');
 
@@ -151,17 +182,19 @@ document.addEventListener('DOMContentLoaded', function () {
       nameErr.textContent = '이름을 입력해주세요.';
       nameInput.classList.add('invalid');
       valid = false;
+      if (!alertMsg) alertMsg = '이름을 입력해주세요.';
     } else {
       nameErr.textContent = '';
       nameInput.classList.remove('invalid');
     }
 
-    var phoneVal = phoneInput.value.replace(/[^0-9]/g, '');
+    var phoneRegex = /^010-\d{4}-\d{4}$/;
     var phoneErr = document.getElementById('phone-error');
-    if (phoneVal.length < 10) {
-      phoneErr.textContent = '올바른 연락처를 입력해주세요.';
+    if (!phoneRegex.test(phoneInput.value)) {
+      phoneErr.textContent = '전화번호는 010-0000-0000 형식으로 입력해주세요.';
       phoneInput.classList.add('invalid');
       valid = false;
+      if (!alertMsg) alertMsg = '전화번호는 010-0000-0000 형식으로 입력해주세요.';
     } else {
       phoneErr.textContent = '';
       phoneInput.classList.remove('invalid');
@@ -172,11 +205,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!consent.checked) {
       consentErr.textContent = '개인정보 수집에 동의해주세요.';
       valid = false;
+      if (!alertMsg) alertMsg = '개인정보 수집 및 이용에 동의해주세요.';
     } else {
       consentErr.textContent = '';
     }
 
-    if (!valid) return;
+    if (!valid) {
+      showAlert('입력 확인', alertMsg);
+      return;
+    }
 
     formData.name = nameInput.value.trim();
     formData.phone = phoneInput.value;

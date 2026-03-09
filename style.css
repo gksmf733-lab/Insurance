@@ -332,26 +332,45 @@ body {
   background: #fff;
 }
 
-/* ===== Select ===== */
-.styled-select {
-  width: 100%;
-  padding: 14px 16px;
+/* ===== Birth Year Input ===== */
+.birth-year-field {
+  position: relative;
   margin: 16px 0;
-  border: 2px solid #eee;
-  border-radius: 12px;
-  font-size: 1rem;
-  color: #333;
-  background: #fafafa;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  cursor: pointer;
 }
 
-.styled-select:focus {
+.birth-year-input {
+  width: 100%;
+  padding: 14px 50px 14px 16px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  background: #fafafa;
+  text-align: center;
+  letter-spacing: 4px;
+  transition: border-color 0.2s;
+}
+
+.birth-year-input:focus {
   outline: none;
   border-color: #ff6b35;
+  background: #fff;
+}
+
+.birth-year-input.invalid {
+  border-color: #ef4444;
+}
+
+.birth-year-suffix {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #999;
+  font-weight: 500;
+  pointer-events: none;
 }
 
 /* ===== Primary Button ===== */
@@ -760,6 +779,10 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
+}
+
+.modal-check.modal-warn {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
 }
 
 .modal h3 {
