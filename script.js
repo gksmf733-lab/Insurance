@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tr.offsetHeight;
     tr.style.opacity = '1';
     tr.style.transform = 'translateY(0)';
-    while (tbody.children.length > 7) tbody.removeChild(tbody.lastChild);
+    while (tbody.children.length > 5) tbody.removeChild(tbody.lastChild);
   }
 
   // 처음에 1개만 보여주고, 3초마다 하나씩 추가
