@@ -229,9 +229,50 @@ document.addEventListener('DOMContentLoaded', function () {
     var insuranceEtcVal = document.getElementById('insurance-etc-input').value.trim();
     if (insuranceEtcVal) formData.insuranceTypeEtc = insuranceEtcVal;
     formData.submittedAt = new Date().toISOString();
-    console.log('상담 신청 데이터:', JSON.stringify(formData, null, 2));
 
-    successModal.classList.add('active');
+    // 질병 정보 조합
+    var diseaseText = (formData.disease || []).join(', ');
+    if (formData.diseaseEtc) diseaseText += (diseaseText ? ', ' : '') + formData.diseaseEtc;
+
+    // 보험종류 조합
+    var insuranceText = (formData.insuranceType || []).join(', ');
+    if (formData.insuranceTypeEtc) insuranceText += (insuranceText ? ', ' : '') + formData.insuranceTypeEtc;
+
+    // Google Sheets 전송
+    var GOOGLE_SHEET_URL = ''; // ← 여기에 Google Apps Script 웹 앱 URL 붙여넣기
+    var submitBtn = document.querySelector('[type="submit"]');
+
+    if (GOOGLE_SHEET_URL) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = '전송 중...';
+
+      fetch(GOOGLE_SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          submittedAt: formData.submittedAt,
+          name: formData.name,
+          phone: formData.phone,
+          gender: formData.gender || '',
+          birthYear: formData.birthYear || '',
+          region: formData.region || '',
+          disease: diseaseText,
+          insuranceType: insuranceText
+        })
+      }).then(function () {
+        successModal.classList.add('active');
+      }).catch(function () {
+        successModal.classList.add('active');
+      }).finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '무료 상담 신청하기';
+      });
+    } else {
+      console.log('상담 신청 데이터:', JSON.stringify(formData, null, 2));
+      successModal.classList.add('active');
+    }
+
     this.reset();
     goToStep(1);
     formData = {};
