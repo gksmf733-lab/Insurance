@@ -283,6 +283,18 @@ document.addEventListener('DOMContentLoaded', function () {
     formData = {};
   });
 
+  // ===== 전화번호 클릭 (PC: 알림, 모바일: 전화 연결) =====
+  var phoneBtn = document.getElementById('header-phone-btn');
+  if (phoneBtn) {
+    phoneBtn.addEventListener('click', function (e) {
+      var isMobile = /Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (!isMobile) {
+        e.preventDefault();
+        alert('모바일만 이용가능한 서비스입니다.');
+      }
+    });
+  }
+
   // ===== 모달 =====
   modalClose.addEventListener('click', function () { successModal.classList.remove('active'); });
   successModal.addEventListener('click', function (e) {
