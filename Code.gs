@@ -10,7 +10,7 @@
 // ============================================
 
 var TELEGRAM_BOT_TOKEN = '8544166671:AAHI3xKCFuju3MxXpXfA5fuhk8n3vU7gAgA';
-var TELEGRAM_CHAT_ID = ''; // <-- getChatId() 실행 후 여기에 입력하세요
+var TELEGRAM_CHAT_ID = '5806002598';
 
 // ===== 텔레그램 봇에게 메시지를 보낸 후 이 함수를 실행하여 Chat ID를 확인하세요 =====
 function getChatId() {
